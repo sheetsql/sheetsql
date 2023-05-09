@@ -58,7 +58,9 @@ export class Lexer {
     // Muli-char tokens
 
     let val = this.getChar();
-    while (this.hasNextChar() && !this.peek().match(Lexer.WHITESPACE_REGEX)) {
+    while (this.hasNextChar() &&
+           !this.peek().match(Lexer.WHITESPACE_REGEX) &&
+           !SQL_PUNCTUATION.has(this.peek())) {
       val += this.getChar();
     }
 
@@ -70,15 +72,15 @@ export class Lexer {
       return new SQLToken('OPERATOR', val, initalIndex);
     }
 
-    if (SQL_KEYWORDS.has(val)) {
-      return new SQLToken('KEYWORD', val, initalIndex);
+    if (SQL_KEYWORDS.has(val.toUpperCase())) {
+      return new SQLToken('KEYWORD', val.toUpperCase(), initalIndex);
     }
 
-    if (SQL_FUNCTIONS.has(val)) {
-      return new SQLToken('FUNCTION', val, initalIndex);
+    if (SQL_FUNCTIONS.has(val.toUpperCase())) {
+      return new SQLToken('FUNCTION', val.toUpperCase(), initalIndex);
     }
 
-    return new SQLToken('IDENTIFIER', val, initalIndex);
+    return new SQLToken('IDENTIFIER', val.toLowerCase(), initalIndex);
   }
 
   public hasNextToken(): boolean {
@@ -100,6 +102,8 @@ export class Lexer {
     while (this.hasNextChar() && this.peek() !== endChar) {
       val += this.getChar();
     }
+
+    val += this.getChar();
 
     return val;
   }

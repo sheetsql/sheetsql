@@ -37,8 +37,10 @@ export class Set {
 
   public delete(value: any): boolean {
     const had = this.has(value);
-    delete this.store[value];
-    this.orderedStore.splice(this.orderedStore.indexOf(value), 1);
+    if (had) {
+      delete this.store[value];
+      this.orderedStore.splice(this.orderedStore.indexOf(value), 1);
+    }
     return had;
   }
 

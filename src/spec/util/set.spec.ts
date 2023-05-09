@@ -154,6 +154,24 @@ describe('Set', () => {
       expect(set.values()).to.eql(['b', 'c']);
     });
 
+    it('should remove the value from returned values, only if the set contains the value', () => {
+      const set = new Set(['a', 'b', 'c']);
+      expect(set.values().length).to.equal(3);
+      set.delete('d');
+      expect(set.values().length).to.equal(3);
+      expect(set.values()).to.eql(['a', 'b', 'c']);
+    });
+
+    it('should return true if the item was removed', () => {
+      const set = new Set(['a', 'b', 'c']);
+      expect(set.delete('a')).to.be.true;
+    });
+
+    it('should return false if the item was not removed', () => {
+      const set = new Set(['a', 'b', 'c']);
+      expect(set.delete('d')).to.be.false;
+    });
+
     it('should not prevent re-adding values', () => {
       const set = new Set(['a', 'b', 'c']);
       expect(set.size).to.equal(3);

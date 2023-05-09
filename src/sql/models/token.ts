@@ -32,6 +32,7 @@ export const SQL_KEYWORDS = new Set([
   'CREATE',
   'DELETE',
   'DISTINCT',
+  'FROM',
   'GROUP',
   'INNER',
   'INSERT',
